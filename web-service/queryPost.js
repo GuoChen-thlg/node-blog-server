@@ -1,19 +1,20 @@
 const db = require('../config/db')
 /**
- * 
+ *
  * @param {Object} req
  * @param {Object} res
  * @param {Function} next
  */
 const Post = (req, res, next) => {
-	let poist_id = req.query.id
+	let poist_title = req.query.title
+	console.log(poist_title)
 	db.query(
-		'(SELECT `id`,`title`, `firstDate`, `lastDate`, `classify`, `label`, `word_count`, `duration`, `path`, `digest`,`main_part`,`is_open`,`choiceness` FROM `post` WHERE `id`<? ORDER BY `id` DESC LIMIT 1)UNION(SELECT `id`,`title`, `firstDate`, `lastDate`, `classify`, `label`, `word_count`, `duration`, `path`, `digest`, `main_part`,`is_open`,`choiceness` FROM `post` WHERE `id`>=? ORDER BY `id` ASC LIMIT 2);SELECT `author`,`domain_name`,`license`,`license_url`  FROM `site`;',
+		'(SELECT `id`,`title`, `firstDate`, `lastDate`, `classify`, `label`, `word_count`, `duration`, `path`, `digest`,`main_part`,`is_open`,`choiceness` FROM `post` WHERE `id`<(SELECT `id` FROM `post` WHERE `title`=?) ORDER BY `id` DESC LIMIT 1)UNION(SELECT `id`,`title`, `firstDate`, `lastDate`, `classify`, `label`, `word_count`, `duration`, `path`, `digest`, `main_part`,`is_open`,`choiceness` FROM `post` WHERE `id`>=(SELECT `id` FROM `post` WHERE `title`=?) ORDER BY `id` ASC LIMIT 2);SELECT `author`,`domain_name`,`license`,`license_url`  FROM `site`;',
 		function (error, rows) {
 			if (error) {
 				console.error('queryPost:', error)
 				res.json({
-					code: 0,
+					code: -1,
 					status: 'error',
 					info: '获取失败',
 				})
@@ -21,16 +22,25 @@ const Post = (req, res, next) => {
 				let lastPost = {},
 					Post = {},
 					nextPost = {}
+				console.log(rows[0])
 				if (rows[0] && rows[0].length > 0) {
-					rows[0].forEach(post => {
-						if (post.id < poist_id) {
-							lastPost = { ...post }
-						} else if (post.id > poist_id) {
-							nextPost = { ...post }
+					if (rows[0].length == 1) {
+						Post = { ...rows[0][0] }
+					} else if (rows[0].length == 2) {
+						if (poist_title == rows[0][0]['title']) {
+							Post = { ...rows[0][0] }
+							nextPost = { ...rows[0][1] }
 						} else {
-							Post = { ...post }
+							lastPost = { ...rows[0][0] }
+							Post = { ...rows[0][1] }
 						}
-					})
+					} else if (rows[0].length == 3) {
+						lastPost = { ...rows[0][0] }
+						Post = { ...rows[0][1] }
+						nextPost = { ...rows[0][2] }
+					}
+	
+
 					const data = {
 						code: 200,
 						status: 'success',
@@ -38,6 +48,7 @@ const Post = (req, res, next) => {
 						data: {
 							post: {
 								title: Post.title,
+								conent: Post.main_part,
 								meta: {
 									is_open: Post.is_open,
 									choiceness: Post.choiceness,
@@ -134,7 +145,7 @@ const Post = (req, res, next) => {
 				}
 			}
 		},
-		[poist_id, poist_id]
+		[poist_title, poist_title]
 	)
 }
 

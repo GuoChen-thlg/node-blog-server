@@ -17,7 +17,7 @@ const queryCategoryList = (req, res, next) => {
 			let new_classify = []
 
 			rows.forEach(post => {
-				old_classify = [...old_classify, ...post.classify.split('|')]
+				old_classify = [...old_classify, ...post.classify.split(',')]
 			})
 
 			new_classify = Array.from(new Set(old_classify))
@@ -42,7 +42,9 @@ const queryCategoryList = (req, res, next) => {
 			})
 		} else {
 			res.json({
-				code: 0,
+				code: -1,
+				status: 'error',
+				info: '添加失败',
 			})
 		}
 	})

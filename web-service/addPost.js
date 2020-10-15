@@ -13,10 +13,10 @@ const addPost = (req, res, next) => {
 		function (error, rows) {
 			if (error) {
 				res.json({
-					code: 0,
+					code: -1,
 					status: 'error',
 					info: '添加失败',
-					rows,
+					sqlMessage: error.sqlMessage,
 				})
 			} else {
 				res.json({

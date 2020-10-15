@@ -14,6 +14,7 @@ const site_visit = {
 	intraday_uv: [],
 	intraday_ip: [],
 }
+// 定时清空
 setInterval(() => {
 	if (new Date().format('hh:mm:ss') == '00:00:00') {
 		site_visit.intraday_uv_len = 0
@@ -22,13 +23,14 @@ setInterval(() => {
 		site_visit.intraday_ip = []
 	}
 }, 1000)
+
 app.use(cookieParser())
 //  post 参数解析
 app.use(bodyParser.json())
 // 静态文件
-// app.use(express.static(path.join(__dirname, './views/blog')))
-// app.use(express.static(path.join(__dirname, './views/back')))
-// app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, './views/blog')))
+app.use(express.static(path.join(__dirname, './views/back')))
+app.use(express.static(path.join(__dirname, 'public')))
 // 引擎
 // app.set('views',path.join(__dirname , 'views') );
 // app.engine('.html', require('ejs').__express);
@@ -64,10 +66,10 @@ app.get('/', function (req, res) {
 		site_visit.intraday_uv = Array.from(new Set([...old_intraday_uv]))
 	}
 	upUV(site_visit)
-	res.send({
-		...site_visit,
-	})
-	// res.sendFile(path.join(__dirname, '/views/blog/index.html'))
+	// res.send({
+	// 	...site_visit,
+	// })
+	res.sendFile(path.join(__dirname, '/views/blog/index.html'))
 })
 // app.get('/back', function (req, res) {
 // 	res.sendFile(path.join(__dirname, '/views/back/index.html'))
@@ -75,12 +77,12 @@ app.get('/', function (req, res) {
 
 // 跨域设置
 app.all('/api/*', function (req, res, next) {
-	//设置允许跨域的域名，*代表允许任意域名跨域
-	// res.header('Access-Control-Allow-Origin', '*')
-	//允许的header类型
-	// res.header('Access-Control-Allow-Headers', 'content-type')
-	//跨域允许的请求方式
-	// res.header('Access-Control-Allow-Methods', 'DELETE,PUT,POST,GET,OPTIONS')
+	// 设置允许跨域的域名，*代表允许任意域名跨域
+	res.header('Access-Control-Allow-Origin', '*')
+	// 允许的header类型
+	res.header('Access-Control-Allow-Headers', 'content-type')
+	// 跨域允许的请求方式
+	res.header('Access-Control-Allow-Methods', 'DELETE,PUT,POST,GET,OPTIONS')
 	// res.header(
 	// 	'ip',
 	// 	req.headers['x-real-ip'] ||

@@ -21,7 +21,9 @@ const queryCategory = (req, res, next) => {
 				})
 			} else {
 				res.json({
-					code: 0,
+					code: -1,
+					status: 'error',
+					info: '添加失败',
 				})
 			}
 		},

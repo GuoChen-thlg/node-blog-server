@@ -8,7 +8,7 @@ const db = require('../config/db')
 const queryCategory = (req, res, next) => {
 	let category = req.query.category || ''
 	db.query(
-		'SELECT  `path`,`title` FROM `post` WHERE FIND_IN_SET(?,`label`)',
+		'SELECT  `path`,`title`,`lastDate` FROM `post` WHERE FIND_IN_SET(?,`classify`)',
 		function (error, rows) {
 			if (!error) {
 				res.json({
@@ -21,7 +21,9 @@ const queryCategory = (req, res, next) => {
 				})
 			} else {
 				res.json({
-					code: 0,
+					code: -1,
+					status: 'error',
+					info: '添加失败',
 				})
 			}
 		},

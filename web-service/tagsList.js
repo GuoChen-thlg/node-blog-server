@@ -21,7 +21,7 @@ const queryTagsList = (req, res, next) => {
 			let new_tag = []
 
 			rows.forEach(post => {
-				old_tag = [...old_tag, ...post.label.split('|')]
+				old_tag = [...old_tag, ...post.label.split(',')]
 			})
 
 			new_tag = Array.from(new Set(old_tag))
@@ -46,7 +46,9 @@ const queryTagsList = (req, res, next) => {
 			})
 		} else {
 			res.json({
-				code: 0,
+				code: -1,
+				status: 'error',
+				info: '添加失败',
 			})
 		}
 	})

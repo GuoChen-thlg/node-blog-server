@@ -10,15 +10,16 @@ const router = express.Router()
 // const queryPostList = require('./postList')
 router.post('/addPost', require('./addPost'))
 
-router.get('/queryPost', require('./queryPost'))//
+router.get('/queryPost', require('./queryPost')) //
 
 router.get('/siteInit', require('./siteinit'))
+router.post('/upsite', require('./upsite'))
 
-router.get('/categorylist', require('./categoryList'))//
-router.get('/category', require('./category'))//
+router.get('/categorylist', require('./categoryList')) //
+router.get('/category', require('./category')) //
 
-router.get('/tagslist', require('./tagsList'))//
-router.get('/tag', require('./tags'))//
+router.get('/tagslist', require('./tagsList')) //
+router.get('/tag', require('./tags')) //
 
 router.get('/postlist', require('./postList'))
 

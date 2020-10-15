@@ -7,16 +7,18 @@ const db = require('../config/db')
  */
 const queryPostList = (req, res, next) => {
 	// req.query
-	let limit = req.query.limit || 10
-	let Pageindex = req.query.Pageindex || 1
+	let limit = (req.query.limit && req.query.limit > 0) || 10
+	let Pageindex = (req.query.Pageindex && req.query.Pageindex > 0) || 1
 	// total
 	db.query(
-		'SELECT * FROM `post` LIMIT 2 OFFSET 2',
+		'SELECT * FROM `post` LIMIT ? OFFSET ?;SELECT COUNT(*) FROM `post`;',
 		function (error, rows) {
 			if (!error) {
+				let total = rows[1][0]['COUNT(*)']
 				let postList = []
-				rows.forEach(Post => {
-					postList.push({
+				rows[0].forEach(Post => {
+					let basicsPost = {
+						id: Post.id,
 						title: Post.title,
 						meta: {
 							is_open: Post.is_open,
@@ -65,22 +67,44 @@ const queryPostList = (req, res, next) => {
 						},
 						path: Post.path,
 						digest: Post.digest,
-						
-					})
+					}
+					Post.classify != '' &&
+						Post.classify.split(',').forEach(val => {
+							basicsPost.meta.classify.value.push({
+								path: `/categories/${val}`,
+								value: val,
+							})
+						})
+					Post.label != '' &&
+						Post.label.split(',').forEach(val => {
+							basicsPost.meta.label.value.push({
+								path: `/tags/${val}`,
+								value: val,
+							})
+						})
+					postList.push(basicsPost)
 				})
 
 				res.json({
 					code: 200,
-					postList,
+					status: 'success',
+					info: '查询成功',
+					data: {
+						postList,
+						presentPage: Pageindex,
+						overallPage: Math.ceil(total / limit),
+					},
 				})
 			} else {
-				console.log(error)
 				res.json({
+					code: 0,
+					status: 'error',
+					info: '查询失败',
 					error,
 				})
 			}
-		}
-		// [limit, (Pageindex - 1) * limit]
+		},
+		[limit, (Pageindex - 1) * limit]
 	)
 }
 module.exports = queryPostList
