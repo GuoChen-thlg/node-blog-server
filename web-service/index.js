@@ -8,6 +8,9 @@ const router = express.Router()
 // const queryCategory = require('./categoryList')
 // const queryTagsList = require('./tagsList')
 // const queryPostList = require('./postList')
+
+const { siteHeadImg, siteBackImg, authorHeadImg } = require('./upload')
+
 router.post('/addPost', require('./addPost'))
 
 router.get('/queryPost', require('./queryPost')) //
@@ -23,4 +26,7 @@ router.get('/tag', require('./tags')) //
 
 router.get('/postlist', require('./postList'))
 
+router.post('/upload/siteHeadImg', siteHeadImg)
+router.post('/upload/siteBackImg', siteBackImg)
+router.post('/upload/authorHeadImg', authorHeadImg)
 module.exports = router

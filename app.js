@@ -95,7 +95,7 @@ app.all('/api/*', function (req, res, next) {
 })
 // api
 app.use('/api', api)
-
+app.use(bodyParser.json({limit : '50mb'})); 
 const server = app.listen(3000, '0.0.0.0', function () {
 	console.log('http://localhost:%d/', server.address().port)
 })

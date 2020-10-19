@@ -7,79 +7,76 @@ const db = require('../config/db')
  */
 const siteInit = (req, res, next) => {
 	let config = req.body
-	console.log(config)
-	res.json({
-		code: 200,
-		status: 'success',
-		info: '更新成功',
-		data: {},
-	})
-	// db.query(
-	// 	'UPDATE `blog`.`site` SET `author`=?, `domain_name`=?, `license`=?, `license_url`=?, `head_back_color`=?, `head_active_back_color`=?, `head_back_img_isShow`=?, `head_back_img`=?, `head_color`=?, `head_active_color`=?, `sidebar_back_color`=?, `sidebar_active_back_color`=?, `sidebar_main_color`=?, `sidebar_active_main_color`=?, `sidebar_minor_color`=?, `sidebar_active_minor_color`=?, `L2Dwidget_isRender`=?, `L2Dwidget_modelName`=?, `L2Dwidget_tagMode`=?, `L2Dwidget_debug`=?, `L2Dwidget_model_scale`=?, `L2Dwidget_display_superSample`=?, `L2Dwidget_display_position`=?, `L2Dwidget_display_vWidth`=?, `L2Dwidget_display_vHeight`=?, `L2Dwidget_display_hOffset`=?, `L2Dwidget_display_vOffset`=?, `L2Dwidget_react_opacityDefault`=?, `L2Dwidget_react_opacityOnHover`=?, `L2Dwidget_dev_border`=?, `L2Dwidget_mobile_show`=?, `L2Dwidget_mobile_scale`=?, `L2Dwidget_mobile_motion`=?, `L2Dwidget_log`=?, `L2Dwidget_dialog_enable`=?, `L2Dwidget_dialog_hitokoto`=?, `site_back_color`=?, `site_isShow`=?, `site_back_img`=?, `canvas_nest_isShow`=?, `canvas_nest_color`=?, `canvas_nest_opacity`=?, `canvas_nest_zIndex`=?, `canvas_nest_count`=? WHERE `id`=1',
-	// 	function (error, rows) {
-	// 		if (!error) {
-	// 			let data = rows[0]
-	// 			res.json({
-	// 				code: 200,
-	// 				status: 'success',
-	// 				info: '查询成功',
-	// 				data: {},
-	// 			})
-	// 		} else {
-	// 			res.json({
-	// 				code: -1,
-	// 				status: 'error',
-	// 				info: '添加失败',
-	// 			})
-	// 		}
-	// 	},
-	let a=[
-        config.head.back_color
-    ]
-	// )
+	db.query(
+		'UPDATE `site` SET `author` =?, `domain_name` =?, `license` =?, `license_url` =?, `head_back_color` =?, `head_active_back_color` =?, `head_back_img_isShow` =?, `head_back_img` =?, `head_color` =?, `head_active_color` =?, `sidebar_back_color` =?, `sidebar_active_back_color` =?, `sidebar_main_color` =?, `sidebar_active_main_color` =?, `sidebar_minor_color` =?, `sidebar_active_minor_color` =?, `L2Dwidget_isRender` =?, `L2Dwidget_modelName` =?, `L2Dwidget_tagMode`=?, `L2Dwidget_debug` =?, `L2Dwidget_model_scale` =?, `L2Dwidget_display_superSample` =?, `L2Dwidget_display_position` =?, `L2Dwidget_display_vWidth` =?, `L2Dwidget_display_vHeight` =?, `L2Dwidget_display_hOffset` =?, `L2Dwidget_display_vOffset` =?, `L2Dwidget_react_opacityDefault` =?, `L2Dwidget_react_opacityOnHover` =?, `L2Dwidget_dev_border` =?, `L2Dwidget_mobile_show` =?, `L2Dwidget_mobile_scale` =?, `L2Dwidget_mobile_motion` =?, `L2Dwidget_log` =?, `L2Dwidget_dialog_enable` =?, `L2Dwidget_dialog_hitokoto` =?, `site_back_color` =?, `site_isShow` =?, `site_back_img` =?, `canvas_nest_isShow` =?, `canvas_nest_color` =?, `canvas_nest_opacity` =?, `canvas_nest_zIndex` =?, `canvas_nest_count` =?, `links` =?, `reward_qr` =?, `blogroll` =?, `author_image` =?, `author_subtitle` =?, `site_description`=?',
+		function (error, rows) {
+			console.log(rows);
+			if (!error) {
+				res.json({
+					code: 200,
+					status: 'success',
+					info: '修改成功',
+				})
+			} else {
+				res.json({
+					code: -1,
+					status: 'error',
+					info: '修改失败',
+				})
+			}
+		},
+		[
+			config.author.name,
+			config.site.previewURL,
+			config.license.title,
+			config.license.url,
+			config.head.back_color,
+			config.head.active_back_color,
+			config.head.isShow,
+			config.head.back_img,
+			config.head.color,
+			config.head.active_color,
+			config.sidebar.back_color,
+			config.sidebar.active_back_color,
+			config.sidebar.main_color,
+			config.sidebar.active_main_color,
+			config.sidebar.minor_color,
+			config.sidebar.active_minor_color,
+			config.L2Dwidget.isRender,
+			config.L2Dwidget.modelName,
+			config.L2Dwidget.tagMode,
+			config.L2Dwidget.debug,
+			config.L2Dwidget.model.scale,
+			config.L2Dwidget.display.superSample,
+			config.L2Dwidget.display.position,
+			config.L2Dwidget.display.width,
+			config.L2Dwidget.display.height,
+			config.L2Dwidget.display.hOffset,
+			config.L2Dwidget.display.vOffset,
+			config.L2Dwidget.react.opacityDefault,
+			config.L2Dwidget.react.opacityOnHover,
+			config.L2Dwidget.dev.border,
+			config.L2Dwidget.mobile.show,
+			config.L2Dwidget.mobile.scale,
+			config.L2Dwidget.mobile.motion,
+			config.L2Dwidget.log,
+			config.L2Dwidget.dialog.enable,
+			config.L2Dwidget.dialog.hitokoto,
+			config.site.back_color,
+			config.site.isShow,
+			config.site.back_img,
+			config.CanvasNest.isShow,
+			config.CanvasNest.color2,
+			config.CanvasNest.opacity,
+			config.CanvasNest.zIndex,
+			config.CanvasNest.count,
+			JSON.stringify(config.links),
+			JSON.stringify(config.rewardQR),
+			JSON.stringify(config.blogrolllist),
+			config.author.image,
+			config.author.subtitle,
+			config.author.description,
+		]
+	)
 }
-// "author": "天火流光",
-// "domain_name": "http://localhost:3000/#",
-// "license": " CC BY-NC-SA 3.0",
-// "license_url": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
-// "head_back_color": "#fafafa",
-// "head_active_back_color": "#fafafa",
-// "head_back_img_isShow": 1,
-// "head_back_img": "",
-// "head_color": "#555",
-// "head_active_color": "#555",
-// "sidebar_back_color": "#ffffff",
-// "sidebar_active_back_color": "",
-// "sidebar_main_color": "#303133",
-// "sidebar_active_main_color": "#409EFF",
-// "sidebar_minor_color": "",
-// "sidebar_active_minor_color": "",
-// "L2Dwidget_isRender": 0,
-// "L2Dwidget_modelName": "koharu",
-// "L2Dwidget_tagMode": 0,
-// "L2Dwidget_debug": 0,
-// "L2Dwidget_model_scale": 1,
-// "L2Dwidget_display_superSample": 2,
-// "L2Dwidget_display_position": "right",
-// "L2Dwidget_display_vWidth": 200,
-// "L2Dwidget_display_vHeight": 300,
-// "L2Dwidget_display_hOffset": -20,
-// "L2Dwidget_display_vOffset": -40,
-// "L2Dwidget_react_opacityDefault": 1,
-// "L2Dwidget_react_opacityOnHover": 0.5,
-// "L2Dwidget_dev_border": 0,
-// "L2Dwidget_mobile_show": 1,
-// "L2Dwidget_mobile_scale": 0.5,
-// "L2Dwidget_mobile_motion": 1,
-// "L2Dwidget_log": 1,
-// "L2Dwidget_dialog_enable": 0,
-// "L2Dwidget_dialog_hitokoto": 0,
-// "site_back_color": "#eeeeee",
-// "site_isShow": 0,
-// "site_back_img": "",
-// "canvas_nest_isShow": 0,
-// "canvas_nest_color": "0,0,255",
-// "canvas_nest_opacity": 0.7,
-// "canvas_nest_zIndex": -2,
-// "canvas_nest_count": 99
 module.exports = siteInit
