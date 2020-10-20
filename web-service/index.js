@@ -12,8 +12,8 @@ const router = express.Router()
 const { siteHeadImg, siteBackImg, authorHeadImg } = require('./upload')
 
 router.post('/addPost', require('./addPost'))
-
 router.get('/queryPost', require('./queryPost')) //
+router.post('/updatePost',require('./updatePost'))
 
 router.get('/siteInit', require('./siteinit'))
 router.post('/upsite', require('./upsite'))

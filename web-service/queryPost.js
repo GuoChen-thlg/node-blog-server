@@ -7,7 +7,6 @@ const db = require('../config/db')
  */
 const Post = (req, res, next) => {
 	let poist_title = req.query.title
-	console.log(poist_title)
 	db.query(
 		'(SELECT `id`,`title`, `firstDate`, `lastDate`, `classify`, `label`, `word_count`, `duration`, `path`, `digest`,`main_part`,`is_open`,`choiceness` FROM `post` WHERE `id`<(SELECT `id` FROM `post` WHERE `title`=?) ORDER BY `id` DESC LIMIT 1)UNION(SELECT `id`,`title`, `firstDate`, `lastDate`, `classify`, `label`, `word_count`, `duration`, `path`, `digest`, `main_part`,`is_open`,`choiceness` FROM `post` WHERE `id`>=(SELECT `id` FROM `post` WHERE `title`=?) ORDER BY `id` ASC LIMIT 2);SELECT `author`,`domain_name`,`license`,`license_url`  FROM `site`;',
 		function (error, rows) {
@@ -22,7 +21,7 @@ const Post = (req, res, next) => {
 				let lastPost = {},
 					Post = {},
 					nextPost = {}
-				console.log(rows[0])
+				// console.log(rows[0])
 				if (rows[0] && rows[0].length > 0) {
 					if (rows[0].length == 1) {
 						Post = { ...rows[0][0] }
@@ -47,6 +46,7 @@ const Post = (req, res, next) => {
 						info: '获取成功',
 						data: {
 							post: {
+								id:Post.id,
 								title: Post.title,
 								conent: Post.main_part,
 								meta: {
