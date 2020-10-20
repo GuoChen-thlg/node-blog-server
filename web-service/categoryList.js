@@ -5,7 +5,7 @@ const db = require('../config/db')
  * @param {Object} res
  * @param {Function} next
  */
-const queryCategoryList = (req, res, next) => {
+module.exports = (req, res, next) => {
 	let limit = req.query.limit || 10
 	let Pageindex = req.query.Pageindex || 1
 	db.query('SELECT  `classify`,`path`,`title` FROM `post`', function (
@@ -49,4 +49,4 @@ const queryCategoryList = (req, res, next) => {
 		}
 	})
 }
-module.exports = queryCategoryList
+// module.exports = queryCategoryList

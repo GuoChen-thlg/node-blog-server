@@ -5,7 +5,7 @@ const db = require('../config/db')
  * @param {Object} res
  * @param {Function} next
  */
-const addPost = (req, res, next) => {
+module.exports  = (req, res, next) => {
 	let post = req.body
 	let date = new Date()
 	db.query(
@@ -44,4 +44,4 @@ const addPost = (req, res, next) => {
 	)
 }
 
-module.exports = addPost
+// module.exports = addPost

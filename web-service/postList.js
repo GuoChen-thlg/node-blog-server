@@ -5,7 +5,7 @@ const db = require('../config/db')
  * @param {Object} res
  * @param {Function} next
  */
-const queryPostList = (req, res, next) => {
+module.exports  = (req, res, next) => {
 	// req.query
 	let limit = (req.query.limit && req.query.limit > 0) || 10
 	let Pageindex = (req.query.Pageindex && req.query.Pageindex > 0) || 1
@@ -21,8 +21,8 @@ const queryPostList = (req, res, next) => {
 						id: Post.id,
 						title: Post.title,
 						meta: {
-							is_open: Post.is_open,
-							choiceness: Post.choiceness,
+							is_open: Post.is_open==1,
+							choiceness: Post.choiceness==1,
 							firstDate: {
 								'icon-class': 'fa fa-calendar-o',
 								label: '发表于',
@@ -107,4 +107,4 @@ const queryPostList = (req, res, next) => {
 		[limit, (Pageindex - 1) * limit]
 	)
 }
-module.exports = queryPostList
+// module.exports = queryPostList

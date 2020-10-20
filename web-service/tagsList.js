@@ -5,7 +5,7 @@ const db = require('../config/db')
  * @param {Object} res
  * @param {Function} next
  */
-const queryTagsList = (req, res, next) => {
+module.exports  = (req, res, next) => {
 	// req.query
 	// limit
 	// Pageindex
@@ -53,4 +53,4 @@ const queryTagsList = (req, res, next) => {
 		}
 	})
 }
-module.exports = queryTagsList
+// module.exports = queryTagsList

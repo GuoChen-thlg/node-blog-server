@@ -5,7 +5,7 @@ const db = require('../config/db')
  * @param {Object} res
  * @param {Function} next
  */
-const queryCategory = (req, res, next) => {
+module.exports  = (req, res, next) => {
 	let tag = req.query.tag || ''
 	db.query(
 		'SELECT  `path`,`title` FROM `post` WHERE FIND_IN_SET(?,`classify`)',
@@ -30,4 +30,4 @@ const queryCategory = (req, res, next) => {
 		[tag]
 	)
 }
-module.exports = queryCategory
+// module.exports = queryCategory

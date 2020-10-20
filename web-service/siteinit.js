@@ -5,7 +5,7 @@ const db = require('../config/db')
  * @param {Object} res
  * @param {Function} next
  */
-const siteInit = (req, res, next) => {
+module.exports  = (req, res, next) => {
 	let post = req.body
 	let date = new Date()
 	db.query(
@@ -165,4 +165,4 @@ const siteInit = (req, res, next) => {
 // "canvas_nest_opacity": 0.7,
 // "canvas_nest_zIndex": -2,
 // "canvas_nest_count": 99
-module.exports = siteInit
+// module.exports = siteInit

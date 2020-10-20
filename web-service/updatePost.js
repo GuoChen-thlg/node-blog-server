@@ -2,13 +2,13 @@ const db = require('../config/db')
 /**
  *更新文章
  */
-const addPost = (req, res, next) => {
+module.exports = (req, res, next) => {
 	let post = req.body
-    let date = new Date()
+	let date = new Date()
 	db.query(
 		'UPDATE `post` SET `title`=?, `lastDate`=?, `classify`=?, `label`=?, `word_count`=?, `duration`=?, `path`=?, `digest`=?, `main_part`=? WHERE `id`=?',
-        function (error, rows) {
-			if (error&&rows['changedRows']!=0) {
+		function (error, rows) {
+			if (error && rows['changedRows'] != 0) {
 				res.json({
 					code: -1,
 					status: 'error',
@@ -32,10 +32,9 @@ const addPost = (req, res, next) => {
 			Math.round(post.value.length / 300),
 			encodeURI('/post/' + post.title),
 			post.value.substr(0, 200) + '...',
-            post.value,
-            post.id
+			post.value,
+			post.id,
 		]
 	)
 }
 
-module.exports = addPost

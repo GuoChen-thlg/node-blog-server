@@ -5,7 +5,7 @@ const db = require('../config/db')
  * @param {Object} res
  * @param {Function} next
  */
-const siteInit = (req, res, next) => {
+module.exports  = (req, res, next) => {
 	let config = req.body
 	db.query(
 		'UPDATE `site` SET `author` =?, `domain_name` =?, `license` =?, `license_url` =?, `head_back_color` =?, `head_active_back_color` =?, `head_back_img_isShow` =?, `head_back_img` =?, `head_color` =?, `head_active_color` =?, `sidebar_back_color` =?, `sidebar_active_back_color` =?, `sidebar_main_color` =?, `sidebar_active_main_color` =?, `sidebar_minor_color` =?, `sidebar_active_minor_color` =?, `L2Dwidget_isRender` =?, `L2Dwidget_modelName` =?, `L2Dwidget_tagMode`=?, `L2Dwidget_debug` =?, `L2Dwidget_model_scale` =?, `L2Dwidget_display_superSample` =?, `L2Dwidget_display_position` =?, `L2Dwidget_display_vWidth` =?, `L2Dwidget_display_vHeight` =?, `L2Dwidget_display_hOffset` =?, `L2Dwidget_display_vOffset` =?, `L2Dwidget_react_opacityDefault` =?, `L2Dwidget_react_opacityOnHover` =?, `L2Dwidget_dev_border` =?, `L2Dwidget_mobile_show` =?, `L2Dwidget_mobile_scale` =?, `L2Dwidget_mobile_motion` =?, `L2Dwidget_log` =?, `L2Dwidget_dialog_enable` =?, `L2Dwidget_dialog_hitokoto` =?, `site_back_color` =?, `site_isShow` =?, `site_back_img` =?, `canvas_nest_isShow` =?, `canvas_nest_color` =?, `canvas_nest_opacity` =?, `canvas_nest_zIndex` =?, `canvas_nest_count` =?, `links` =?, `reward_qr` =?, `blogroll` =?, `author_image` =?, `author_subtitle` =?, `site_description`=?',
@@ -79,4 +79,4 @@ const siteInit = (req, res, next) => {
 		]
 	)
 }
-module.exports = siteInit
+

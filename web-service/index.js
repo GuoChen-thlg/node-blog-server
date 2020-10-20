@@ -14,6 +14,8 @@ const { siteHeadImg, siteBackImg, authorHeadImg } = require('./upload')
 router.post('/addPost', require('./addPost'))
 router.get('/queryPost', require('./queryPost')) //
 router.post('/updatePost',require('./updatePost'))
+router.post('/updateArrtPost', require('./updateArrtPost'))
+router.post('/deletePost',require('./deletdPost'))
 
 router.get('/siteInit', require('./siteinit'))
 router.post('/upsite', require('./upsite'))

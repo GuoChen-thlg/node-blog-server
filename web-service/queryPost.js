@@ -5,7 +5,7 @@ const db = require('../config/db')
  * @param {Object} res
  * @param {Function} next
  */
-const Post = (req, res, next) => {
+module.exports  = (req, res, next) => {
 	let poist_title = req.query.title
 	db.query(
 		'(SELECT `id`,`title`, `firstDate`, `lastDate`, `classify`, `label`, `word_count`, `duration`, `path`, `digest`,`main_part`,`is_open`,`choiceness` FROM `post` WHERE `id`<(SELECT `id` FROM `post` WHERE `title`=?) ORDER BY `id` DESC LIMIT 1)UNION(SELECT `id`,`title`, `firstDate`, `lastDate`, `classify`, `label`, `word_count`, `duration`, `path`, `digest`, `main_part`,`is_open`,`choiceness` FROM `post` WHERE `id`>=(SELECT `id` FROM `post` WHERE `title`=?) ORDER BY `id` ASC LIMIT 2);SELECT `author`,`domain_name`,`license`,`license_url`  FROM `site`;',
@@ -149,4 +149,4 @@ const Post = (req, res, next) => {
 	)
 }
 
-module.exports = Post
+// module.exports = Post
