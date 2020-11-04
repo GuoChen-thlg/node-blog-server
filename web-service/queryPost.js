@@ -21,7 +21,6 @@ module.exports  = (req, res, next) => {
 				let lastPost = {},
 					Post = {},
 					nextPost = {}
-				// console.log(rows[0])
 				if (rows[0] && rows[0].length > 0) {
 					if (rows[0].length == 1) {
 						Post = { ...rows[0][0] }
@@ -91,7 +90,7 @@ module.exports  = (req, res, next) => {
 										'icon-class': 'fa fa-comment-o',
 										label: '评论',
 										value: '400',
-										path: rows[1][0]['domain_name'] + Post.path + '/#comments',
+										path: rows[1][0]['domain_name'] + Post.path + '/?comments',
 									},
 								},
 								path: Post.path,

@@ -31,4 +31,11 @@ router.get('/postlist', require('./postList'))
 router.post('/upload/siteHeadImg', siteHeadImg)
 router.post('/upload/siteBackImg', siteBackImg)
 router.post('/upload/authorHeadImg', authorHeadImg)
+
+router.post('/search',require('./search'))
+
+
+
+
+
 module.exports = router

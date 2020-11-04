@@ -4,7 +4,6 @@ const db = require('../config/db')
  */
 module.exports = (req, res, next) => {
     let data = req.body
-    console.log(data);
 	if (data.arrt === 'is_open') {
 		db.query(
 			'UPDATE `blog`.`post` SET `is_open`=? WHERE `id`=?',
@@ -30,7 +29,6 @@ module.exports = (req, res, next) => {
 		db.query(
 			'UPDATE `post` SET `choiceness`=?  WHERE `id`=?',
             function (error, rows) {
-                console.log(rows['changedRows']);
 				if (error || rows['changedRows'] == 0) {
 					res.json({
 						code: -1,

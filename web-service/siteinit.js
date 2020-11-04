@@ -13,7 +13,6 @@ module.exports  = (req, res, next) => {
 		function (error, rows) {
 			if (!error) {
 				let data = rows[0][0]
-				console.log(data);
 				res.json({
 					code: 200,
 					status: 'success',
@@ -36,11 +35,11 @@ module.exports  = (req, res, next) => {
 							active_minor_color: data.sidebar_active_minor_color,
 						},
 						L2Dwidget: {
-							isRender: data.L2Dwidget_isRender,
+							isRender: data.L2Dwidget_isRender?true:false,
 							modelName: data.L2Dwidget_modelName,
 							pluginModelPath: '/live2d-widget-model-koharu/assets/', //模型文件相对与插件根目录路径 live2d-widget-model-nico/assets/
-							tagMode: data.L2Dwidget_tagMode, //标签模式
-							debug: data.L2Dwidget_debug, //调试, 是否在控制台输出日志
+							tagMode: data.L2Dwidget_tagMode?true:false, //标签模式
+							debug: data.L2Dwidget_debug?true:false, //调试, 是否在控制台输出日志
 							model: {
 								jsonPath:
 									'/live2dw/live2d-widget-model-koharu/assets/koharu.model.json', //主文件路径 /live2dw/live2d-widget-model-nico/assets/nico.model.json
@@ -63,18 +62,18 @@ module.exports  = (req, res, next) => {
 								border: data.L2Dwidget_dev_border, //在canvas周围显示边界
 							},
 							mobile: {
-								show: data.L2Dwidget_mobile_show, //是否在移动设备上显示
+								show: data.L2Dwidget_mobile_show?true:false, //是否在移动设备上显示
 								scale: data.L2Dwidget_mobile_scale, //移动设备上的缩放
-								motion: data.L2Dwidget_mobile_motion, // 移动设备是否开启重力感应
+								motion: data.L2Dwidget_mobile_motion?true:false, // 移动设备是否开启重力感应
 							},
 							log: data.L2Dwidget_log,
 							dialog: {
-								enable: data.L2Dwidget_dialog_enable, //显示人物对话框
-								hitokoto: data.L2Dwidget_dialog_hitokoto, //使用一言API
+								enable: data.L2Dwidget_dialog_enable?true:false, //显示人物对话框
+								hitokoto: data.L2Dwidget_dialog_hitokoto?true:false, //使用一言API
 							},
 						},
 						CanvasNest: {
-							isShow: data.canvas_nest_isShow,
+							isShow: data.canvas_nest_isShow?true:false,
 							color1: `rgb(${data.canvas_nest_color})`,
 							color2: data.canvas_nest_color,
 							opacity: data.canvas_nest_opacity,
@@ -83,7 +82,7 @@ module.exports  = (req, res, next) => {
 						},
 						site: {
 							back_color: data.site_back_color,
-							isShow: data.site_isShow,
+							isShow: data.site_isShow?true:false,
 							back_img: data.site_back_img,
 							copyrightYear: '2020',
 							detailDate: '03/20/2020 00:00:00',
@@ -108,7 +107,8 @@ module.exports  = (req, res, next) => {
 						license: {
 							title: data.license,
 							url:data.license_url
-						}
+						},
+						isSearch:data.is_search?true:false,
 					},
 				})
 			} else {
